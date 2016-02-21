@@ -10,9 +10,28 @@ class ProjectsController < ApplicationController
 	end
 	def create
 		@project = Project.new(project_params)
-		@project.save
-		redirect_to projects_path
+		if @project.save
+			redirect_to projects_path
+		else
+			render 'new'
+		end
 	end
+
+	def edit
+		@project = Project.find(params[:id])
+	end
+
+	def update
+		@project = Project.fill(params[:id])
+		if @project.update(project_params)
+			redirect_to projects_path
+		else
+			render 'edit'
+		end
+	end
+
+
+
 
 	private
 		def project_params
